@@ -13,6 +13,14 @@ datasource for Vitrage.
 The following guide is for Ubuntu. With slight modifications it should work for
 other linux flavours. Links for this purpose are added below.
 
+
+Prerequisites
+------------
+Install devstack with vitrage before install Nagios via OMD due to this issue_
+
+.. _issue: https://bugs.launchpad.net/vitrage/+bug/1629811
+
+
 Installation
 ------------
 
@@ -56,6 +64,7 @@ Installation
     - *APACHE_TCP_ADDR* indicates the address to listen on. Use 0.0.0.0 to
       listen for all traffic addressed to the specified port. Use a different
       address to listen on a specific (public) address.
+    - When using devstack, remember to stop omd apache2's sites
 
 5. Install the Check_MK agent on devstack VM:
    ::
