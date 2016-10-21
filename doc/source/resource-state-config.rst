@@ -25,7 +25,7 @@ Configure Access to Resource State
 ----------------------------------
 
 The resource state configuration is handled via config files. The location of
-these files can be determined in **/etc/vitrage/vitrage.conf**. Under the
+these files can be determined in ``/etc/vitrage/vitrage.conf``. Under the
 [entity_graph] section, set:
 
 +------------------------+------------------------------------+----------------------------------+
@@ -65,27 +65,22 @@ Default Configuration
 Default configurations for resource states will be installed with Vitrage for
 all the pre-packaged data-sources.
 
-
-
-
 Format
 ++++++
-::
 
-    category: RESOURCE
-    values:
-      - aggregated values:
-          priority: <Resource state priority - an integer>
-          original values:
-            - name: <Original resource state name>
-              operational_value: <normalized resource state - from
-                                  OperationalResourceState class>
-            - name: ... # can list several states for one aggregation
-      - aggregated values:
-          priority: ... # can list several aggregated states
-          ...
+.. code:: yaml
 
-
+  category: RESOURCE
+  values:
+    - aggregated values:
+        priority: <Resource state priority - an integer>
+        original values:
+          - name: <Original resource state name>
+            operational_value: <normalized resource state - from OperationalResourceState class>
+          - name: ... # can list several states for one aggregation
+    - aggregated values:
+        priority: ... # can list several aggregated states
+        ...
   ...
 
 
@@ -93,12 +88,14 @@ Example
 +++++++
 
 The following file will map resource states.
+
 For aggregated state with priority 40 we have 4 states and each one of them is
 mapped to operational severity ERROR.
+
 For aggregated state with priority 30 we have 6 states and each one of them is
 mapped to operational severity TRANSIENT, etc...
 
-::
+.. code :: yaml
 
   category: RESOURCE
     values:

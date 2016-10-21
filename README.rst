@@ -8,12 +8,12 @@ Vitrage is the OpenStack RCA (Root Cause Analysis) Service for organizing, analy
 
 Enabling Vitrage in DevStack
 ----------------------------
-see `README file <https://github.com/openstack/vitrage/blob/master/devstack/README.rst/>`_
+More details in: `README file <devstack/README.rst>`_
 
 Project Resources
 -----------------
 
-* wiki page: https://wiki.openstack.org/wiki/Vitrage
+* Wiki page: https://wiki.openstack.org/wiki/Vitrage
 * Launchpad: https://launchpad.net/vitrage
 * Source: http://git.openstack.org/cgit/openstack/vitrage
 

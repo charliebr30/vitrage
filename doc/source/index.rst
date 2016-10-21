@@ -25,7 +25,7 @@ Developer Guide
 ---------------
 
 .. toctree::
-   :maxdepth: 1 
+   :maxdepth: 1
 
    vitrage-first_steps
    vitrage-api
@@ -36,7 +36,7 @@ Design Documents
 ----------------
 
 .. toctree::
-   :maxdepth: 1 
+   :maxdepth: 1
 
    vitrage-graph-design
    scenario-evaluator

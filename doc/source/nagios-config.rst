@@ -5,7 +5,7 @@ Nagios Plugin Configuration
 Configure Access to Nagios
 --------------------------
 
-The following should be set in **/etc/vitrage/vitrage.conf**, under [nagios] section:
+The following should be set in ``/etc/vitrage/vitrage.conf``, under ``[nagios]`` section:
 
 +------------------+---------------------------------------------------------+-------------------------------+
 | Name             | Description                                             | Default Value                 |
@@ -31,9 +31,9 @@ Nagios access configuration - example
 When installing Nagios on devstack with IP 10.20.30.40, following
 the instructions here_, this would be the correct configuration:
 
-.. _here: https://github.com/openstack/vitrage/blob/master/doc/source/nagios-devstack-installation.rst
+.. _here: nagios-devstack-installation.html
 
- ::
+.. code::
 
   [nagios]
   user = omdadmin
@@ -54,7 +54,7 @@ to map each Nagios host to a Vitrage resource.
 Format
 ++++++
 
-::
+.. code ::
 
  nagios:
   - nagios_host: <Host as appears in Nagios>
@@ -64,7 +64,6 @@ Format
   - nagios_host: <Host as appears in Nagios>
     type: <resource type in Vitrage>
     name: <resource name in Vitrage>
-
   ...
 
 Note that for ease of use, there is support for wildcards in the "nagios_host"
@@ -79,7 +78,7 @@ Example 1
 The following example is for a system with two hosts. In nagios they are named
 *compute-0, compute-1*, and in nova they are named *host-1, host-2*.
 
-::
+.. code::
 
  nagios:
   - nagios_host: compute-0
@@ -94,15 +93,15 @@ Example 2
 +++++++++
 
 The following file will
- - map all Nagios hosts named host-*<some_suffix>* or *<some_prefix>*-devstack
-   to resources of type nova.host with the same name.
- - map all Nagios hosts named instance-*<some_suffix>* to nova.instance
+ - map all Nagios hosts named ``host-<some_suffix>`` or ``<some_prefix>-devstack``
+   to resources of type ``nova.host`` with the same name.
+ - map all Nagios hosts named ``instance-<some_suffix>`` to ``nova.instance``
    resources.
 
-Note how the *${nagios_host}* references the instantiation of the regex defined
-in nagios_host.
+Note how the ``${nagios_host}`` references the instantiation of the regex defined
+in ``nagios_host``.
 
-::
+.. code::
 
  nagios:
   - nagios_host: host-(.*)

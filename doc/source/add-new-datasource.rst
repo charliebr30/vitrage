@@ -9,19 +9,19 @@ In order to add a new datasource to Vitrage do the following steps:
 
  1. Have your datasource enclosed in a package with the datasources' name and
     put it under 'vitrage.datasources', For example:
-    vitrage.datasource.cinder.volume.
+    ``vitrage.datasource.cinder.volume``.
  2. Under your datasource package, have both your datasources' driver class
     and your datasources' transformer class. See below for details on those
     classes.
- 3. Under your datasources' package __init__.py you must import cfg
-    from oslo_config and declare a list named OPTS. Under OPTS, you can define
-    your needed options using the oslo_config.cfg module.
+ 3. Under your datasources' package ``__init__.py`` you must import ``cfg``
+    from ``oslo_config`` and declare a list named ``OPTS``. Under ``OPTS``, you can define
+    your needed options using the ``oslo_config.cfg`` module.
     There are three options you must have:
 
     a. Driver and transformer with the path to your driver and transformer
        classes respectively.
-    b. update_method property that describes the type of update mechanism for
-       this datasource. The options are: push, pull or none.
+    b. ``update_method`` property that describes the type of update mechanism for
+       this datasource. The options are (string): push, pull or none.
     c. In addition to those three, you may add any other configuration options
        you may need for your datasource.
 
@@ -32,38 +32,37 @@ In order to add a new datasource to Vitrage do the following steps:
     devstack is installed, you need to add it to the 'types' property in the
     datasources section in the configuration. To do so, do the following:
 
-    a. add the datasource name to the types property in the "devstack.settings"
+    a. add the datasource name to the types property in the ``devstack.settings``
        file.
     b. if the datasource is not one of the main and basic projects of devstack,
-       add the following data in the "devstack.plugin.sh" file":
+       add the following data in the ``devstack.plugin.sh`` file":
 
-       # remove <datasource_name> vitrage datasource if <datasource_name>
-       datasource not installed
+    .. code:: bash
 
-       if ! is_service_enabled <datasource_name>; then
+        # remove <datasource_name> vitrage datasource if <datasource_name> datasource not installed
 
-          disable_vitrage_datasource <datasource_name>
-
-       fi
+        if ! is_service_enabled <datasource_name>; then
+            disable_vitrage_datasource <datasource_name>
+        fi
  6. You are done!
 
 
 Driver Class
-__________________
+____________
 
 Responsible for importing information regarding entities in the cloud.
 Entities in this context refer both to resources (physical, virtual,
 applicative) and alarms (Aodh, Nagios, Zabbix, Monasca, etc.)
 The datasource has two modes of action:
 
- 1. get_all (snapshot): Query all entities and send events to the vitrage
+ 1. ``get_all`` (snapshot): Query all entities and send events to the vitrage
     events queue.
     When done for the first time, send an "end" event to inform it has finished
     the get_all for the datasource (because it is done asynchronously).
- 2. notify: Send an event to the vitrage events queue upon any change.
+ 2. ``notify``: Send an event to the vitrage events queue upon any change.
     This can be done in two ways:
 
-    a. Built in polling mechanism called get_changes.
+    a. Built in polling mechanism called ``get_changes``.
     b. Built in pushing mechanism using the oslo bus.
 
 A driver should inherit from 'vitrage.datasources.driver_base.DriverBase' class
@@ -88,7 +87,7 @@ _________________
 The Transformer class understands the specific entity details and outputs a
 tuple with the following details:
 
- 1. The vertex with its new details to be added / updated / deleted.
+ 1. The vertex with its new details to be added/updated/deleted.
  2. List of tuples where each tuple consists of:
 
     a. Neighbor vertex with it's partial data so vitrage will know to where
@@ -97,7 +96,7 @@ tuple with the following details:
 
 Note that for every driver there should be a matching Transformer.
 A transformer should inherit from
-'vitrage.datasoures.transformer_base.TransformerBase' class and
+``vitrage.datasoures.transformer_base.TransformerBase`` class and
 must implement the following methods:
 
 +----------------------------------+------------------------------------+----------------------------------------+
@@ -138,7 +137,7 @@ Holds the following fields:
 
 **Example**
 
-Datasource __init__.py OPTS:
+Datasource ``__init__.py OPTS``:
 
 .. code:: python
 
@@ -168,23 +167,25 @@ Datasource __init__.py OPTS:
 Instantiation flow
 ------------------
 
-Now, when loading Vitrage, vitrage.datasources.launcher.Launcher
+Now, when loading Vitrage, ``vitrage.datasources.launcher.Launcher``
 will get instantiated and will register all of the datasources
-into Vitrage. Note, that if you want your datasource to also run as a
+into Vitrage. **Note**: if you want your datasource to also run as a
 service i.e. get changes every <interval> you need to set under your
-datasources' OPTS an Integer option named 'changes_interval'.
-Additionally, vitrage.entity_graph.transformer_manager.TransformerManager
+datasources ``OPTS`` an ``Integer`` option named ``changes_interval``.
+
+Additionally, ``vitrage.entity_graph.transformer_manager.TransformerManager``
 will get instantiated and will register all of the datasources transformers
 into Vitrage.
+
 These two steps are using your previously configured driver and
-transformer path options under your datasources' package __init__.OPTS.
+transformer path options under your datasources' package ``__init__.OPTS``.
 
 
 Datasource Configuration Options
 --------------------------------
 
-Any option your datasource defined can be accessed using oslo_config.cfg
-or by configuring vitrage.conf.
+Any option your datasource defined can be accessed using ``oslo_config.cfg``
+or by configuring ``vitrage.conf``.
 
 **Example**
 
@@ -195,26 +196,23 @@ or by configuring vitrage.conf.
 
 **Example**
 
-/etc/vitrage/vitrage.conf
+.. code::
 
+    # /etc/vitrage/vitrage.conf
     ...
-
     [datasources]
-
     snapshots_interval = 300
-
     # Names of supported plugins (list value)
-
-    types = nova.host,nova.instance,nova.zone,static_physical,nagios,aodh,cinder.volume,neutron.network,neutron.port,heat.stack
-
+    types = nagios,zabbix,nova.host,nova.instance,nova.zone,static_physical,aodh,cinder.volume,neutron.network,neutron.port,heat.stack
 
     [zabbix]
-
-    url = http://135.248.18.30
-
+    url = http://<ip>/zabbix
     password = zabbix
-
     user = admin
-
     config_file = /etc/vitrage/zabbix_conf.yaml
 
+    [nagios]
+    user = omdadmin
+    password = omd
+    url = http://<ip>:<port>/<site>/nagios/cgi-bin/status.cgi
+    config_file = /etc/vitrage/nagios_conf.yaml

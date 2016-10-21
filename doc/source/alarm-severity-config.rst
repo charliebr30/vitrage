@@ -16,8 +16,9 @@ Since each data-source might represent severity differently, for each
 data-source we can supply it's own mapping to the aggregated severity supported
 in Vitrage. This way we can know which severity is more important.
 In addition we also normalize the severities for the horizon UI (called
-operational_severity) in order for the UI to know what color to show in
+``operational_severity``) in order for the UI to know what color to show in
 Horizon.
+
 This page explains how to handle this mapping for a given
 data-source.
 
@@ -66,12 +67,10 @@ Default Configuration
 Default configurations for alarms severities will be installed with Vitrage for
 all the pre-packaged data-sources.
 
-
-
-
 Format
 ++++++
-::
+
+.. code:: yaml
 
     category: ALARM
     values:
@@ -79,13 +78,11 @@ Format
           priority: <Alarm severity priority - an integer>
           original values:
             - name: <Original alarm severity name>
-              operational_value: <normalized alarm severity - from
-                                  OperationalAlarmSeverity class>
+              operational_value: <normalized alarm severity - from OperationalAlarmSeverity class>
             - name: ... # can list several severities for one aggregation
       - aggregated values:
           priority: ... # can list several aggregated severities
           ...
-
   ...
 
 
@@ -93,11 +90,14 @@ Example
 +++++++
 
 The following file will map alarm severities.
+
 For aggregated severity with priority 40 we have 2 severities and each one of
 them is mapped to operational severity CRITICAL.
+
 For aggregated severity with priority 30 we have 1 severity called WARNING and
 it is mapped to operational severity WARNING, etc...
-::
+
+.. code:: yaml
 
     category: ALARM
     values:

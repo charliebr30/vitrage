@@ -17,12 +17,14 @@ Installation
 ------------
 
 1. Update your repo to include the OMD key:
-   ::
+
+   .. code::
 
     wget -q "https://labs.consol.de/repo/stable/RPM-GPG-KEY" -O - | sudo apt-key add -
 
 2. Update your repo with the OMD site. For example, for ubuntu trusty release:
-   ::
+
+   .. code::
 
     sudo bash -c "echo 'deb https://labs.consol.de/repo/stable/ubuntu trusty main' >> /etc/apt/sources.list"
     sudo apt-get update
@@ -30,21 +32,24 @@ Installation
  For additional distros, see https://labs.consol.de/repo/stable/
 
 3. Install OMD
-   ::
+
+   .. code::
 
     sudo apt-get install omd
 
 4. Create a site for nagios with a name of your choosing, for example
-   "my_site".
-   ::
+   ``my_site``.
+
+   .. code::
 
     sudo omd create my_site
     sudo omd config my_site set APACHE_TCP_PORT 54321
     sudo omd config my_site set APACHE_TCP_ADDR 0.0.0.0
     sudo omd start  my_site
 
-   You can now access your Nagios site here: *http://<devstack_ip>:54321/my_site/omd*.
-   ::
+   You can now access your Nagios site here: *http://<devstack_ip>:54321/my_site/omd/*.
+
+   .. code::
 
     username: omdadmin
     password: omd
@@ -58,17 +63,19 @@ Installation
       address to listen on a specific (public) address.
 
 5. Install the Check_MK agent on devstack VM:
-   ::
+
+   .. code::
 
     sudo apt-get install check-mk-agent
 
-6. Activate the Check_MK agent, by editing */etc/xinetd.d/check_mk* and
+6. Activate the Check_MK agent, by editing ``/etc/xinetd.d/check_mk`` and
    **setting "disable" to "no"**, and then run
-   ::
+
+   .. code::
 
     sudo service xinetd restart
 
-7. In your browser, go to *http://<devstack_ip>:<selected port>/my_site/omd*
+7. In your browser, go to *http://<devstack_ip>:<selected port>/my_site/omd/*
    and follow the instructions at this link_ (**"Configuring the first host and
    checks"** section) to configure the nagios host.
 
@@ -77,4 +84,4 @@ Installation
 8. *Vitrage Support.* With Nagios installed, you can now configure a datasource
    for it for Vitrage, by following the instructions here_.
 
-   .. _here: https://github.com/openstack/vitrage/blob/master/doc/source/nagios-config.rst
+   .. _here: nagios-config.html

@@ -5,6 +5,7 @@ Vitrage Notifier plugins - AODH
 Overview
 ========
 The Evaluator performs root cause analysis on the Vitrage Graph and may determine that an alarm should be created, deleted or otherwise updated.
+
 Other components are notified of such changes by the Vitrage Notifier service. Among others, Vitrage Notifier is responsible for handling Aodh Alarms.
 
 This document describes the implementation of Vitrage Notifier infrastructure and specifically notifying Aodh on Vitrage alarms.
@@ -49,15 +50,15 @@ Deduced Alarms bus notifications
 Vitrage Evaluator will create a deduced alarm, sending it to the data source queue
 Vitrage Evaluator will use the **vitrage.graph** message bus topic, and will post messages as follows:
 
- - message of type **vitrage.deduced_alarm.activate** :
+ - message of type ``vitrage.deduced_alarm.activate`` :
 
-   * name - is the alarm name in vitrage
-   * severity - is the alarm severity
-   * affected_resource_id - is the openstack id of the resource on which the alarm was raised
+   * ``name`` - is the alarm name in vitrage
+   * ``severity`` - is the alarm severity
+   * ``affected_resource_id`` - is the openstack id of the resource on which the alarm was raised
 
- - **vitrage.deduced_alarm.deactivate**
+ - ``vitrage.deduced_alarm.deactivate``
 
-   * id - is the alarm id
+   * ``id`` - is the alarm id
 
 Notifier
 ========
@@ -71,9 +72,9 @@ Aodh Plugin
 ===========
 Vitrage alarms should be reflected as possible in Aodh. The aodh plugin has ceilometer client by which it can send rest calls to aodh
 
-Handle vitrage.deduced_alarm.activate:
--------------------------------------
-Create an event alarm with the specified severity, where the alarm name is vitrage_alarm_name+resource_id so to be unique
+Handle ``vitrage.deduced_alarm.activate``
+-----------------------------------------
+Create an event alarm with the specified severity, where the alarm name is ``vitrage_alarm_name+resource_id`` so to be unique
 
  - Message does not contain aodh alarm id:
 
@@ -86,8 +87,8 @@ Create an event alarm with the specified severity, where the alarm name is vitra
 
    * plugin will **update** the aodh alarm status to alarm
 
-Handle vitrage.deduced_alarm.deactivate:
----------------------------------------
-delete an event alarm with the specified id
+Handle ``vitrage.deduced_alarm.deactivate``
+-------------------------------------------
+Delete an event alarm with the specified id
 
    * message will contain the aodh alarm id - plugin will **update** the alarm status to ok

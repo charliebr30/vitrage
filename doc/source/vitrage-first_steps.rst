@@ -11,9 +11,9 @@ Before you start
 
 Installation
 ============
-- `Enable Vitrage in devstack <https://github.com/openstack/vitrage/blob/master/devstack/README.rst/>`_
-- `Enable Vitrage in horizon <https://github.com/openstack/vitrage-dashboard/blob/master/README.rst/>`_
-- run ./stack.sh
+- `Enable Vitrage in devstack <https://github.com/openstack/vitrage/blob/master/devstack/README.rst>`_
+- `Enable Vitrage in horizon <https://github.com/openstack/vitrage-dashboard/blob/master/README.rst>`_
+- run ``./stack.sh``
 
 
 Nagios Installation & Configuration
@@ -27,8 +27,8 @@ as the trigger for deduced alarms, states and RCA templates in Vitrage.
 
 .. _Nagios: https://www.nagios.org/
 
-- `Install Nagios on your devstack <https://github.com/openstack/vitrage/blob/master/doc/source/nagios-devstack-installation.rst/>`_
-- `Configure Nagios datasource <https://github.com/openstack/vitrage/blob/master/doc/source/nagios-config.rst>`_
+- `Install Nagios on your devstack <http://docs.openstack.org/developer/vitrage/nagios-devstack-installation.html>`_
+- `Configure Nagios datasource <http://docs.openstack.org/developer/vitrage/nagios-config.html>`_
 
 
 Vitrage in action
@@ -37,7 +37,7 @@ Vitrage in action
 In order to see Vitrage in action, you should place your templates under
 */etc/vitrage/templates*. See template_ example.
 
-.. _template: https://github.com/openstack/vitrage/blob/master/doc/source/host_high_memory_consumption.yaml
+.. _template: host_high_memory_consumption.yaml
 
 In the example shown here, we will cause Nagios to report high memory usage on
 the devstack host. As a result and as defined in our sample template, Vitrage
@@ -114,12 +114,12 @@ differently, for each data-source you can define it's own mapping to the
 *normalized* states/severities supported in Vitrage. This will impact UI and
 templates behavior that depends on these fields.
 
-- `Resource state configuration <https://github.com/openstack/vitrage/blob/master/doc/source/resource-state-config.rst/>`_
-- `Alarm severity configuration <https://github.com/openstack/vitrage/blob/master/doc/source/alarm-state-config.rst/>`_
+- `Resource state configuration <http://docs.openstack.org/developer/vitrage/resource-state-config.html>`_
+- `Alarm severity configuration <http://docs.openstack.org/developer/vitrage/alarm-severity-config.html>`_
 
 Writing your own templates
 --------------------------
 For more information regarding Vitrage templates, their format and how to add
 them, see here_.
 
-.. _here: https://github.com/openstack/vitrage/blob/master/doc/source/vitrage-template-format.rst
+.. _here: http://docs.openstack.org/developer/vitrage/vitrage-template-format.html

@@ -88,7 +88,7 @@ Template Loading
 Scenarios are written up in configuration files called *templates*. The format
 and specification of these can be seen here_.
 
-.. _here: https://github.com/openstack/vitrage/blob/master/doc/source/vitrage-template-format.rst
+.. _here: vitrage-template-format.html
 
 Templates should all be located in the *<vitrage folder>/templates* folder.
 

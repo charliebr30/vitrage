@@ -7,9 +7,9 @@ Consolidate Zabbix alerts from across multiple sites into a single "at-a-glance"
 Installation
 ------------
 
-**Note:** Don't try to use zabbix with docker image to test, because `zabbix_vitrage.py` require some openstack libraries (`oslo.messaging` and `oslo.config`).
+**Note:** Don't try to use zabbix with docker image to test, because ``zabbix_vitrage.py`` requires some openstack libraries (``oslo.messaging`` and ``oslo.config``).
 
-Copy the `zabbix_vitrage.py` script into the Zabbix servers' `AlertScriptsPath` directory which is by default `/usr/lib/zabbix/alertscripts` and make it executable:
+Copy the ``zabbix_vitrage.py`` script into the Zabbix servers' ``AlertScriptsPath`` directory which is by default ``/usr/lib/zabbix/alertscripts`` and make it executable:
 
 .. code-block:: bash
 
@@ -17,7 +17,7 @@ Copy the `zabbix_vitrage.py` script into the Zabbix servers' `AlertScriptsPath` 
     $ cp zabbix_vitrage.py /usr/lib/zabbix/alertscripts/
     $ chmod 755 /usr/lib/zabbix/alertscripts/zabbix_vitrage.py
 
-Install `oslo.messaging` and `oslo.config` to zabbix host (may require root):
+Install ``oslo.messaging`` and ``oslo.config`` to zabbix host (may require root):
 
 .. code:: bash
 
@@ -30,35 +30,35 @@ To forward zabbix events to Vitrage a new media script needs to be created and a
 
 1. Create a new media type [Admininstration > Media Types > Create Media Type]
 
-    | Name: Vitrage Notifications
-    | Type: Script
-    | Script name: zabbix_vitrage.py
-    | Script parameters:
-    |    1st line: {ALERT.SENDTO}
-    |    2nd line: {ALERT.SUBJECT}
-    |    3rd line: {ALERT.MESSAGE}
+    | **Name:** Vitrage Notifications
+    | **Type:** Script
+    | **Script name:** zabbix_vitrage.py
+    | **Script parameters**:
+    |   **1st line:** {ALERT.SENDTO}
+    |   **2nd line:** {ALERT.SUBJECT}
+    |   **3rd line:** {ALERT.MESSAGE}
 
 
 2. Modify the Media for the Admin user [Administration > Users]
 
-    | Type: vitrage Notifications
-    | Send to: rabbit://rabbit_user:rabbit_pass@127.0.0.1:5672/   <--- Vitrage message bus url
-    | When active: 1-7,00:00-24:00
-    | Use if severity: tick all options
-    | Status: Enabled
+    | **Type:** Vitrage Notifications
+    | **Send to:** ``rabbit://rabbit_user:rabbit_pass@127.0.0.1:5672/``   <--- Vitrage message bus url
+    | **When active:** 1-7,00:00-24:00
+    | **Use if severity:** tick all options
+    | **Status:** Enabled
 
-    **Note:** Default rabbit_user/rabbit_pass for devstack rabbitmq is `stackrabbit/secret`
+    **Note:** Default ``rabbit_user/rabbit_pass`` for devstack rabbitmq is ``stackrabbit/secret``
 
 3. Configure Action [Configuration > Actions > Create Action > Action]
 
-    | Name: Forward to Vitrage
-    | Default Subject: {TRIGGER.STATUS}
+    | **Name:** Forward to Vitrage
+    | **Default Subject:** {TRIGGER.STATUS}
 
-    | Add an operation:
-    |   Send to Users: Admin
-    |   Send only to: Vitrage Notifications
+    | **Add an operation:**
+    |   **Send to Users:** Admin
+    |   **Send only to:** Vitrage Notifications
 
-    | Default Message:
+    | **Default Message:**
     |   host={HOST.NAME1}
     |   hostid={HOST.ID1}
     |   hostip={HOST.IP1}
@@ -70,35 +70,35 @@ To forward zabbix events to Vitrage a new media script needs to be created and a
     |   priority={TRIGGER.NSEVERITY}
     |   lastchange={EVENT.DATE} {EVENT.TIME}
 
-    | To send events add under the Conditions tab:
+    | **To send events add under the Conditions tab:**
     |   (A) Maintenance status not in `maintenance`
 
 For a full list of trigger macros see https://www.zabbix.com/documentation/3.0/manual/appendix/macros/supported_by_location
 
-To test zabbix events and vitrage alarms, please see zabbix trgger documentation: https://www.zabbix.com/documentation/3.2/manual/config/triggers/trigger
+To test zabbix events and vitrage alarms, please see zabbix trigger documentation: https://www.zabbix.com/documentation/3.2/manual/config/triggers/trigger
 
 
 Vitrage configuration
 ---------------------
 
-1. Add zabbix to list of datasources in /etc/vitrage/vitrage.conf
+1. Add zabbix to list of datasources in ``/etc/vitrage/vitrage.conf``
 
 .. code::
 
     [datasources]
     types = zabbix,nova.host,nova.instance,nova.zone,static_physical,aodh,cinder.volume,neutron.network,neutron.port,heat.stack
 
-2. Add following section to /etc/vitrage/vitrage.conf
+2. Add following section to ``/etc/vitrage/vitrage.conf``
 
 .. code::
 
     [zabbix]
-    url = http://135.248.18.30  # URL to zabbix
+    url = http://<ip>/zabbix  # URL to zabbix
     password = zabbix
     user = admin
     config_file = /etc/vitrage/zabbix_conf.yaml
 
-2. Create /etc/vitrage/zabbix_conf.yaml with this content
+2. Create ``/etc/vitrage/zabbix_conf.yaml`` with this content
 
 .. code ::
 
